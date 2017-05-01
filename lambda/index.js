@@ -20,13 +20,14 @@ exports.handler = function(event, context, callback) {
   }
   
   //match only one of the allowed sizes
-  if(match[1] === 'xxs') const size = 32;
-  else if(match[1] === 'xs') const size = 64;
-  else if(match[1] === 's') const size = 128;
-  else if(match[1] === 'm') const size = 160;
-  else if(match[1] === 'l') const size = 360;
-  else if(match[1] === 'xl') const size = 640;
-  else if(match[1] === 'xxl') const size = 1280;
+  var size = 0;
+  if(match[1] === 'xxs')      size = 32;
+  else if(match[1] === 'xs')  size = 64;
+  else if(match[1] === 's')   size = 128;
+  else if(match[1] === 'm')   size = 160;
+  else if(match[1] === 'l')   size = 360;
+  else if(match[1] === 'xl')  size = 640;
+  else if(match[1] === 'xxl') size = 1280;
   else {
     console.log("Error: parameter not allowed", key);
     callback(null, { statusCode: '301', headers: {'location': `${URL}/default.jpg`}, body: ''});     
