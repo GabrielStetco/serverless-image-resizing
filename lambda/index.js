@@ -7,11 +7,16 @@ const Sharp = require('sharp');
 const BUCKET = process.env.BUCKET;
 const URL = process.env.URL;
 
+console.log("BUCKET",BUCKET);
+console.log("URL",URL);
+
 exports.handler = function(event, context, callback) {
+
   const key = event.queryStringParameters.key;
+
   const match = key.match(/(\d+)x(\d+)\/(.*)/);
   const width = parseInt(match[1], 10);
-  const height = parseInt(match[2], 10);
+  const height = parseInt(match[2], 10);	
   const originalKey = match[3];
 
   S3.getObject({Bucket: BUCKET, Key: originalKey}).promise()
@@ -33,5 +38,9 @@ exports.handler = function(event, context, callback) {
         body: '',
       })
     )
-    .catch(err => callback(err))
+    .catch(err => callback(null, {
+        statusCode: '301',
+        headers: {'location': `${URL}/default.jpg`},
+        body: '',
+      }))
 }
