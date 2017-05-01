@@ -17,6 +17,7 @@ exports.handler = function(event, context, callback) {
   if(!match || !match[1] || !match[2]) {
     console.log("Error: missing or wrong key", key);
     callback(null, { statusCode: '301', headers: {'location': `${URL}/default.jpg`}, body: ''});
+    return;
   }
   
   //match only one of the allowed sizes
@@ -31,6 +32,7 @@ exports.handler = function(event, context, callback) {
   else {
     console.log("Error: parameter not allowed", key);
     callback(null, { statusCode: '301', headers: {'location': `${URL}/default.jpg`}, body: ''});     
+    return;
   }
   
   const originalKey = match[2];
